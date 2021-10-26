@@ -38,7 +38,10 @@
     <body class="antialiased bg-dark text-light">
         
 
-            <div class="container pt-5">
+            
+
+            
+            <div class="container pt-5 text-center">
                 <div class="text-center pt-5">
                     <h4>{!! Session::get('value') !!}</h4>
                     <h2 class="text-center">
@@ -46,18 +49,44 @@
                     </h2>
                 </div>
                 
+                @if ($errors->any())
+                    <div class="alert alert-danger bg-danger p-3">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                @if (Session::get('error'))
+                    <div class=" bg-danger p-3">
+                        {!! Session::get('error') !!}
+                    </div>
+                    
+                @endif
 
                 <form action="{{route('convert')}}" method="post" class="form-group mt-5">
                     @csrf
                     <div class="form-inline justify-content-center">
                         <div class="form-group">
                             <label for="" class="mx-sm-3 ">PESO VALUE:</label>
-                            <input type="text" name="amount" id="number" class="numbers bordered form-control mx-sm-3">
+                            <input type="text" name="amount" id="number" class="numbers bordered form-control mx-sm-3" value="{{old('amount')}}">
                         </div>
                     </div>
-                    <p id="amount" class="mx-sm-3 mt-3 text-center"></p>
 
-                    <div class="form-group text-center">
+
+                    
+                    <div class="text-center">
+                        @if (Session::get('number'))
+                            <p>{!! NumConvert::word(Session::get('number')) !!}</p>
+                        @endif
+                        @if (Session::get('word'))
+                            <p>{!! Session::get('word') !!}</p>
+                        @endif
+                    </div>
+
+                    <div class="form-group text-center mt-3">
                         <button class="btn btn-primary">Convert to USD</button>
 
                     </div>
@@ -68,29 +97,29 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
-<script>
-    //Enter Only Numbers
-    $(".numbers").keypress(function (e) {
-        //if the letter is not digit then display error and don't type anything
-        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-            //display error message
-                return false;
-        }
-    });
+    {{-- <script>
+        //Enter Only Numbers
+        $(".numbers").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                    return false;
+            }
+        });
 
-    var words="";
-    $(function() {
-        $("#number").on("keydown keyup", per);
-        function per() {
-            var totalamount = (
-            Number($("#number").val()) + Number($("#amount2").val())
-            );
-            $("#totalval").val(totalamount);
-            words = toWords(Number($("#number").val()));
-            $("#amount").html(words);
-        }
-    });
+        var words="";
+        $(function() {
+            $("#number").on("keydown keyup", per);
+            function per() {
+                var totalamount = (
+                Number($("#number").val()) + Number($("#amount2").val())
+                );
+                $("#totalval").val(totalamount);
+                words = toWords(Number($("#number").val()));
+                $("#amount").html(words);
+            }
+        });
 
-    </script>
+    </script> --}}
     </body>
 </html>

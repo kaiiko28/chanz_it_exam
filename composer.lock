@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f1a6a9cc3028a10f0318b16bb3228fb",
+    "content-hash": "9d5c9ff030ff189fcac94a3a22e33335",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -121,6 +121,62 @@
                 }
             ],
             "time": "2021-08-15T20:50:18+00:00"
+        },
+        {
+            "name": "djunehor/word-to-number",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/djunehor/word-to-number.git",
+                "reference": "8443a91a706f0f797eacb250cf8947883c65b06a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/djunehor/word-to-number/zipball/8443a91a706f0f797eacb250cf8947883c65b06a",
+                "reference": "8443a91a706f0f797eacb250cf8947883c65b06a",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "kwn/number-to-words": "dev-master",
+                "phpunit/phpunit": "^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Djunehor\\Number\\": "src/"
+                },
+                "files": [
+                    "src/Helpers/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Zacchaeus Bolaji",
+                    "email": "djunehor@gmail.com"
+                }
+            ],
+            "description": "Transform words to numbers",
+            "keywords": [
+                "djunehor",
+                "laravel",
+                "laravel-package",
+                "number",
+                "php",
+                "word",
+                "word-to-number"
+            ],
+            "support": {
+                "issues": "https://github.com/djunehor/word-to-number/issues",
+                "source": "https://github.com/djunehor/word-to-number/tree/master"
+            },
+            "time": "2019-11-27T22:23:39+00:00"
         },
         {
             "name": "doctrine/inflector",

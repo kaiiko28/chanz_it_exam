@@ -20,3 +20,4 @@ Route::get('/', function () {
 
 Route::get('/convert', [PageController::class, 'convert'])->name('convert_number');
 Route::post('currency',[PageController::class, 'exchangeCurrency'])->name('convert');
+Route::get('testword', [PageController::class, 'testword']);

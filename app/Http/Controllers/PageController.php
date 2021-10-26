@@ -6,7 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 
-
+use Djunehor\Number\WordToNumber;
 
 class PageController extends Controller
 {
@@ -43,16 +43,65 @@ class PageController extends Controller
         
     }
 
-
-    
-    public function test() {
-
-        return view('currency');
-       }   
    
        public function exchangeCurrency(Request $request) {
-   
-         $amount = ($request->amount)?($request->amount):(1);
+
+        $amount = $request->amount;
+        
+        $number = null;
+
+        $number_word = array(
+            'one' =>  ' one', 
+            'two' => ' two', 
+            'three' => ' three', 
+            'four' => ' four', 
+            'five' => ' five', 
+            'six' => ' six',
+            'seven' => ' seven', 
+            'eight' => ' eight', 
+            'nine' => ' nine', 
+            'zero' => ' zero', 
+            'twenty' => ' twenty', 
+            'thirty' => ' thirty', 
+            'fourty' => ' fourty', 
+            'fifty' => ' fifty',
+            'sixty' => ' sixty', 
+            'seventy' => ' seventy', 
+            'eighty' => ' eighty', 
+            'ninety' => ' ninety', 
+            'hundred' => ' hundred',
+            'thousand' => ' thousand', 
+            'million' => ' million', 
+            'billion' => ' billion',
+            'thrillion' => ' thrillion');
+
+            
+        $amount = strtr($amount, $number_word);
+
+        if (ctype_alpha(str_replace(array("\n", "\t", ' '), '', $amount))) // '/[^a-z\d]/i' should also work.
+        {
+            
+            $wordToNumber = new WordToNumber();
+                $wordTransformer = $wordToNumber->getWordTransformer();
+                // you can specify locale via: $wordToNumber->getWordTransformer('en');
+                $number = $wordTransformer->toNumber($amount);
+                
+
+
+                $amount = $number;
+          
+            
+        }
+        else if(is_numeric($amount)){
+            $amount = $request->amount;
+        }
+        else {
+            $error = "input accept only amount or letter number";
+            return redirect()->back()->with(['error' => $error]);
+        }
+
+
+
    
          $apikey = env('API_KEY');
          $apiurl = env('API_URL');
@@ -78,7 +127,24 @@ class PageController extends Controller
    
         //  echo  "value of PESO in USD is $formatValue";
         // dd($data);
+        
 
-        return redirect()->back()->with( ['converted' => $data, 'value' => $usd] );
+
+
+        
+
+        return redirect()->back()->with( ['converted' => $data, 'value' => $usd, 'word' => $number, 'number' => $amount] )->withInput();
+      }
+
+      public function testword() {
+        $word = 'one hundred';
+
+
+        $wordToNumber = new WordToNumber();
+        $wordTransformer = $wordToNumber->getWordTransformer();
+        // you can specify locale via: $wordToNumber->getWordTransformer('en');
+        $number = $wordTransformer->toNumber($word);
+
+        return $number;
       }
 }
